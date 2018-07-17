@@ -11,6 +11,7 @@ import {
   Button,
   AsyncStorage,
 } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 const width = Dimensions.get('screen').width;
 
@@ -50,10 +51,24 @@ export default class Login extends Component {
           AsyncStorage.setItem('token', token);
           AsyncStorage.setItem('usuario', this.state.usuario);
 
-          this.props.navigator.resetTo({
-            screen: 'Feed',
-            title: 'Instalura',
-          })
+          Navigation.startTabBasedApp({
+            tabs: [
+              {
+                label: 'Feed',
+                screen: 'Feed',
+                icon: require('../../resources/img/icon-home.png'), 
+                selectedIcon: require('../../resources/img/icon-home.png'),
+                title: 'Instalura',
+              },
+              {
+                label: 'Atividades',
+                screen: 'Atividades',
+                icon: require('../../resources/img/icon-activities.png'),
+                selectedIcon: require('../../resources/img/icon-activities.png'),
+                title: 'Atividades'
+              }
+            ],
+          });
       })
       .catch(e => this.setState({mensagem: e.message}))
   }
